@@ -26,8 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class CommonHandler {
+
+
     /***
-     * 此类事抽象父类 必须要有子类实例才能注入
+     * 此类是抽象父类 必须要有子类实例才能注入
      * Ps. 见子类 HessionHandleFactory
      * */
     @Autowired

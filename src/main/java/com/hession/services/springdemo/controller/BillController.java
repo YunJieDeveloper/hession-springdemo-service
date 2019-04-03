@@ -3,6 +3,7 @@ package com.hession.services.springdemo.controller;
 import com.hession.services.springdemo.common.ServerConstants;
 import com.hession.services.springdemo.entity.RequestEntity;
 import com.hession.services.springdemo.entity.ResponseEntity;
+import com.hession.services.springdemo.exception.HessionServerException;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class BillController {
                     value = "令牌", defaultValue = "afddeeg12daaf32")})
     @ApiOperation(value = "getBill test")
     @RequestMapping(value = "/bill/getBill", method = RequestMethod.GET)
-    @ApiResponses(value = {@ApiResponse(code = 401, message = "请求未通过认证.", response = Exception.class)})
+    @ApiResponses(value = {@ApiResponse(code = 401, message = "请求未通过认证.", response = HessionServerException.class)})
     public ArrayList<String> getBill(@RequestHeader("token") String token, @RequestParam("billName") String billName) {
         return new ArrayList<>(Arrays.asList(new String[]{billName}));
     }
@@ -37,7 +38,7 @@ public class BillController {
                     value = "令牌", defaultValue = "afddeeg12daaf32")})
     @ApiOperation(value = "getBill test")
     @RequestMapping(value = "/bill/getInfo", method = RequestMethod.GET)
-    @ApiResponses(value = {@ApiResponse(code = 401, message = "请求未通过认证.", response = Exception.class)})
+    @ApiResponses(value = {@ApiResponse(code = 401, message = "请求未通过认证.", response = HessionServerException.class)})
     public ResponseEntity getInfo(@RequestHeader("token") String token, @RequestParam("mobile") String mobile) {
         return  ResponseEntity.builder().mobile(mobile).build();
     }
@@ -48,7 +49,7 @@ public class BillController {
                     value = "令牌", defaultValue = "afddeeg12daaf32")})
     @ApiOperation(value = "getBill test")
     @RequestMapping(value = "/bill/getInfo", method = RequestMethod.POST)
-    @ApiResponses(value = {@ApiResponse(code = 401, message = "请求未通过认证.", response = Exception.class)})
+    @ApiResponses(value = {@ApiResponse(code = 401, message = "请求未通过认证.", response = HessionServerException.class)})
     public ResponseEntity getPostInfo(@RequestHeader("token") String token, @RequestBody RequestEntity requestEntity) {
         return  ResponseEntity.builder().mobile(requestEntity.getMobile()).name(requestEntity.getRequestName()).build();
     }

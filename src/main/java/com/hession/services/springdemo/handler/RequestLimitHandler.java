@@ -1,5 +1,6 @@
 package com.hession.services.springdemo.handler;
 
+import com.hession.services.springdemo.handler.redis.JedisHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,12 @@ public class RequestLimitHandler {
 
 
     @Autowired
-   private RedisHandler redisHandler;
+   private JedisHandler jedisHandler;
 
     public void recordRequestCount(String uri) throws Exception{
         Matcher matcher = REQUEST_URL.matcher(uri);
         if (matcher.find()){
-            Long requestCount = redisHandler.incre(RECORD_REQUEST_KEY, EXPIRE_KEY_TIME);
+            Long requestCount = jedisHandler.incre(RECORD_REQUEST_KEY, EXPIRE_KEY_TIME);
              //todo 超过请求数 抛异常出去,建议自定义异常,优化提示语
             if (requestCount>EXPIRE_REQUEST_COUNT){
                 throw new Exception("too many request, please retry later");

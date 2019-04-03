@@ -64,6 +64,8 @@ public class ParamHandleFilter implements Filter {
                 //将paramWrapper通过过滤器链往下传
                 filterChain.doFilter(paramWrapper, servletResponse);
             }
+            /** 一定要调用此方法放过去 */
+            filterChain.doFilter(servletRequest,servletResponse);
         } else {
             filterChain.doFilter(request, servletResponse);
         }

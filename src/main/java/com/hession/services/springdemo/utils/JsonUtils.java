@@ -15,7 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
-
+/**
+ * @author hession
+ * json <-> Object互相转换工具类
+ *
+ * */
 @Slf4j
 public class JsonUtils {
     private static final ObjectMapper mapper = new ObjectMapper();

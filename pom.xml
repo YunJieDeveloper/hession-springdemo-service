@@ -24,11 +24,42 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--redis 整合springboot2.X版本-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <!-- springboot2.0默认使用Lettuce
+              若要切换成Jedis 需要exclusion <groupId>io.lettuce</groupId> 如下： -->
+            <exclusions>
+                <exclusion>
+                    <groupId>io.lettuce</groupId>
+                    <artifactId>lettuce-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <!--aop-->
+        <!--redis 整合springboot1.X版本-->
+       <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+        </dependency>
+       -->
+        <!--redis client如果选用Lettuce,则须添加此依赖-->
+        <!--commons-pool2-->
+     <!--    <dependency>
+             <groupId>org.apache.commons</groupId>
+             <artifactId>commons-pool2</artifactId>
+             <version>2.6.0</version>
+         </dependency>-->
+
+        <!--redis client如果选用Jedis,则须添加此依赖 实现分布式锁方法-->
+        <!--该依赖包含了commons-pool2包-->
+         <dependency>
+             <groupId>redis.clients</groupId>
+             <artifactId>jedis</artifactId>
+             <version>2.9.0</version>
+         </dependency>
+
+         <!--aop-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -51,12 +82,6 @@
             <version>3.8.1</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>2.6.0</version>
-        </dependency>
         <!--swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
