@@ -39,3 +39,9 @@ The following guides illustrates how to use certain features concretely:
 
  5.统一异常处理(其实也是切面的一种实现方式)
    WholeExceptionHandler
+   
+ 6.整合swagger
+    SwaggerConfig
+    
+ 7.springboot 配置类
+    ServerConfig
