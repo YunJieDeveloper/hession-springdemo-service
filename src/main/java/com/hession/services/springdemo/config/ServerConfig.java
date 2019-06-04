@@ -1,15 +1,18 @@
 package com.hession.services.springdemo.config;
 
 
-import com.hession.services.springdemo.Filter.GZipFilter;
-import com.hession.services.springdemo.Filter.ParamHandleFilter;
-import com.hession.services.springdemo.Filter.RequestLimitFilter;
+import com.hession.services.springdemo.entity.DemoEntity;
+import com.hession.services.springdemo.filter.GZipResponseFilter;
+import com.hession.services.springdemo.filter.ParamHandleFilter;
+import com.hession.services.springdemo.filter.RequestLimitFilter;
+import com.hession.services.springdemo.filter.UnzipRequestFilter;
 import com.hession.services.springdemo.handler.CommonHandler;
 import com.hession.services.springdemo.handler.RequestLimitHandler;
 import com.hession.services.springdemo.interceptor.CommonInterceptor;
 import com.hession.services.springdemo.interceptor.SimpleInterceptor;
 import com.hession.services.springdemo.interceptor.enums.EventTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,16 +47,25 @@ public class ServerConfig extends WebMvcConfigurationSupport {
 
 
     /**
-     * 过滤器: 1 GZipFilter
+     * 测试@ConditionalOnProperty 的用法
+     */
+    @Bean
+    @ConditionalOnProperty(name="entity-enabled", havingValue = "true")
+    public DemoEntity demoEntity() {
+       return new DemoEntity();
+    }
+
+    /**
+     * 过滤器: 1 GZipResponseFilter
      */
     @Bean
     @Order(1)
     public FilterRegistrationBean gZipFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        GZipFilter gZipFilter = new GZipFilter();
-        registration.setFilter(gZipFilter);
+        GZipResponseFilter gZipResponseFilter = new GZipResponseFilter();
+        registration.setFilter(gZipResponseFilter);
         registration.addUrlPatterns("/hession/v1/bill/*","/hession/v1/request/*");
-        registration.setName("gZipFilter");
+        registration.setName("gZipResponseFilter");
         return registration;
     }
 

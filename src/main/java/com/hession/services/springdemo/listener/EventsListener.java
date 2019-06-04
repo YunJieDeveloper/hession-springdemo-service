@@ -40,7 +40,7 @@ public class EventsListener {
      */
     @EventListener(ApplicationReadyEvent.class)
     public void handleApplicationReadyEvent(ApplicationReadyEvent readyEvent){
-      log.info("action=readyEvent,");
+      log.info("action=readyEvent, this is a listener");
     }
 
 }

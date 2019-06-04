@@ -1,4 +1,4 @@
-package com.hession.services.springdemo.Filter.wrapper;
+package com.hession.services.springdemo.filter.wrapper;
 
 import com.google.common.base.Charsets;
 import lombok.extern.slf4j.Slf4j;

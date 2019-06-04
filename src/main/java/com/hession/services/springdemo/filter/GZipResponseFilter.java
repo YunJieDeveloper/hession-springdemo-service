@@ -1,4 +1,4 @@
-package com.hession.services.springdemo.Filter;
+package com.hession.services.springdemo.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -15,21 +15,19 @@ import java.util.zip.GZIPOutputStream;
 /**
  * @author hession
  * 过滤器：
- * 根据请求头:Accept-Encoding 判断过滤器是否对数据调请求执行压缩操作
+ * 根据请求头:Accept-Encoding 判断过滤器是否对数据请求response执行压缩操作
  */
 @Slf4j
-public class GZipFilter implements Filter {
+public class GZipResponseFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
+        log.info("action=doFilter, this is GZipResponseFilter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        log.info("action=GZipFilter start");
         if (StringUtils.isNotBlank(request.getHeader(HttpHeaders.ACCEPT_ENCODING))
                 && request.getHeader(HttpHeaders.ACCEPT_ENCODING).contains("none")
         ) {
             filterChain.doFilter(request, response);
-            log.info("action=GZipFilter end");
         } else {
             ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
             filterChain.doFilter(request, responseWrapper);
@@ -41,24 +39,25 @@ public class GZipFilter implements Filter {
         }
 
     }
-  private byte[] gzip(byte[]data){
-      ByteArrayOutputStream byteArrayOutputStream =new ByteArrayOutputStream(10*1024);
-      GZIPOutputStream outputStream=null;
-      try {
-          outputStream=new GZIPOutputStream(byteArrayOutputStream);
-          outputStream.write(data);
-      } catch (IOException e) {
-          log.error("GZIPOutputStream occur error");
-      }finally {
-          if (outputStream!=null){
-              try {
-                  outputStream.close();
-              } catch (IOException e) {
-                  log.error("outputStream close error");
-              }
-          }
-      }
-      return byteArrayOutputStream.toByteArray();
-  }
+
+    private byte[] gzip(byte[] data) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(10 * 1024);
+        GZIPOutputStream outputStream = null;
+        try {
+            outputStream = new GZIPOutputStream(byteArrayOutputStream);
+            outputStream.write(data);
+        } catch (IOException e) {
+            log.error("GZIPOutputStream occur error");
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    log.error("outputStream close error");
+                }
+            }
+        }
+        return byteArrayOutputStream.toByteArray();
+    }
 }
 

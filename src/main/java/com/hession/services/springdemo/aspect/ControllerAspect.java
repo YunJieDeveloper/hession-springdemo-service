@@ -6,8 +6,10 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.CodeSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,10 +21,11 @@ import java.util.List;
  **/
 
 @Aspect // 使用@Aspect注解声明一个切面
-@Component
+@Component//注入bean
+@Order(1)//多个切面，可以指定加载顺序，值越小，优先级越高
 public class ControllerAspect {
 
-  private final String EXECUTION ="execution(public * com.hession.services.springdemo.controller.RequestController.*(..))";
+    private final static String EXECUTION = "execution(public * com.hession.services.springdemo.controller.RequestController.*(..))";
 
     @Pointcut("execution(public * com.hession.services.springdemo.controller.*.getBill(..))")
     public void billAspect() {
@@ -50,7 +53,14 @@ public class ControllerAspect {
         List<String> list = Arrays.asList("billName");
         for (int i = 0; i < parameterNames.length; i++) {
             if (list.contains(parameterNames[i])) {
-                args[i] += "环绕切面包装";
+                //此处是对入参做切面处理
+                args[i] += ":环绕切面包装";
+                //此处可做切面方法操作
+                if (false) {
+                    ArrayList<String> list1 = new ArrayList<>();
+                    list1.add("测试切面");
+                    return list1;
+                }
             }
         }
 
@@ -61,7 +71,7 @@ public class ControllerAspect {
 
     /**
      * 处理请求参数类型为引用类型时用@Before
-     * */
+     */
     @Before("requestAspect()||billAspect()")
     public void requestControlAspect(JoinPoint joinPoint) {
         /**获取参数值*/
@@ -69,19 +79,19 @@ public class ControllerAspect {
         for (Object arg : args) {
             if (arg instanceof RequestEntity) {
                 RequestEntity entity = (RequestEntity) arg;
-                entity.setRequestName(entity.getRequestName() + "前置通知修改");
+                entity.setRequestName(entity.getRequestName() + ":前置通知修改");
             }
         }
     }
 
     /**
      * 处理返回体用AfterReturning
-     * */
-    @AfterReturning(value = EXECUTION,returning = "object")
+     */
+    @AfterReturning(value = EXECUTION, returning = "object")
     public void responseAspect(Object object) {
         if (object instanceof ResponseEntity) {
             ResponseEntity responseEntity = (ResponseEntity) object;
-            responseEntity.setName(responseEntity.getName() + "修改返回体数据");
+            responseEntity.setName(responseEntity.getName() + ":修改返回体数据");
         }
     }
 

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * redis 公共基本操作
  **/
 @Slf4j
-public class RedisBaseHandler {
+public class RedisBaseHandler implements IRedisHandler{
 
     @Autowired
     protected StringRedisTemplate stringRedisTemplate;
@@ -233,14 +233,14 @@ public class RedisBaseHandler {
         return stringRedisTemplate.opsForList().rightPop(key);
     }
 
-    
+
     /**
-     * @author hession
-     * @description //TODO 
      * @param
-     * @return 
+     * @return
+     * @author hession
+     * @description //TODO
      */
-    public String rightPop(String key,long timeout, TimeUnit unit) {
+    public String rightPop(String key, long timeout, TimeUnit unit) {
         return stringRedisTemplate.opsForList().rightPop(key);
     }
 

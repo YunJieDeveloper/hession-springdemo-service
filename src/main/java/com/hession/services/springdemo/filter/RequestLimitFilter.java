@@ -1,4 +1,4 @@
-package com.hession.services.springdemo.Filter;
+package com.hession.services.springdemo.filter;
 
 import com.hession.services.springdemo.handler.RequestLimitHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class RequestLimitFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
+        log.info("action=doFilter, this is RequestLimitFilter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String requestURI = request.getRequestURI();

@@ -1,7 +1,7 @@
-package com.hession.services.springdemo.Filter;
+package com.hession.services.springdemo.filter;
 
 import com.google.common.base.Charsets;
-import com.hession.services.springdemo.Filter.wrapper.ParamServletRequestWrapper;
+import com.hession.services.springdemo.filter.wrapper.ParamServletRequestWrapper;
 import com.hession.services.springdemo.entity.RequestEntity;
 import com.hession.services.springdemo.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +27,7 @@ public class ParamHandleFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        log.info("action=doFilter, this is ParamHandleFilter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         if (Objects.equals(HttpMethod.GET.name(), request.getMethod())) {
             ParamServletRequestWrapper paramWrapper = new ParamServletRequestWrapper(request, null);
