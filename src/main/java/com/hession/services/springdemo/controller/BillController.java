@@ -1,5 +1,6 @@
 package com.hession.services.springdemo.controller;
 
+import com.hession.services.springdemo.aspect.annotation.ToAspect;
 import com.hession.services.springdemo.common.ServerConstants;
 import com.hession.services.springdemo.entity.RequestEntity;
 import com.hession.services.springdemo.entity.ResponseEntity;
@@ -28,6 +29,7 @@ public class BillController {
     @ApiOperation(value = "getBill test")
     @RequestMapping(value = "/bill/getBill", method = RequestMethod.GET)
     @ApiResponses(value = {@ApiResponse(code = 401, message = "请求未通过认证.", response = HessionServerException.class)})
+    @ToAspect()
     public ArrayList<String> getBill(@RequestHeader("token") String token, @RequestParam("billName") String billName) {
         return new ArrayList<>(Arrays.asList(new String[]{billName}));
     }

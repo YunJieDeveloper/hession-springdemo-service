@@ -38,7 +38,7 @@ public class ControllerAspect {
 
     }
 
-    @Around("billAspect()")
+   // @Around("billAspect()")
     /**
      * 处理请求参数类型为String类型时须用@Around
      * */
